@@ -58,16 +58,14 @@ fn main() {
 
     let mut sql_string= String::from("");
     for table in tables{
-        let mut a = 21;
+        let mut a = 0;
         //loop 20 times here
-        while a<=25{
+        while a<=20{
             sql_string.push_str("insert into ");
             sql_string.push_str(format!(r"{}(",table.name).as_str());
             for item in table.column{
-                //for i in [item.0].iter(){
                     sql_string.push_str(item.0);
                     sql_string.push_str(", ");
-               // }
             }
             //pops off remaining ", "
             sql_string.pop();
@@ -75,9 +73,7 @@ fn main() {
             //and add a ") "
             sql_string.push_str(r") ");
             sql_string.push_str("values (");
-            //
             for item in table.column{
-           
                     //matches i to either INTEGER or STRING and pushes values to sql_string
                     match item.1 {
                         "INTEGER"=> {sql_string.push_str(format!("{}, ",a).as_str());},
@@ -86,7 +82,6 @@ fn main() {
                         "STRING"=> { sql_string.push_str(format!("'{}{}', ",item.0,a).as_str());},
                     _=>{ panic!("types not valid, need to be INTEGER or STRING")},
                     }
-              
             }
             //pops off remaining ", "
             sql_string.pop();
